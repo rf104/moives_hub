@@ -8,7 +8,7 @@ function MovieCard({movie}) {
     <div className='rounded-sm  flex-col inline-block border p-4 mx-2 bg-amber-50'>
         <div className='flex align-top justify-center'>
             {/**Image part handled here */}
-            <img src={movie.img} alt="movie-poster" className='w-40 h-40 rounded-md' />
+            <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt="movie-poster" className='w-40 h-40 rounded-md' />
             <div>
                 <button className='h-8 w-8' onClick={favtBtn}>🤍</button>
             </div>

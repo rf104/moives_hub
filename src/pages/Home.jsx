@@ -9,9 +9,26 @@ function Home() {
 
     const [Search,setSerch] = useState('');
     const [storage,setStorage] = useState([]);
-
-    const handleSearch = (e) =>{
+    const [error,setError] = useState(null)
+    const [loading, setLoadin] = useState(true)
+    const handleSearch = async (e) =>{
         e.preventDefault();
+        if(!Search.trim()) return;
+        
+        
+        try {
+            setLoadin(true);
+            const searchResult = await searchMovies(Search);
+            setStorage(searchResult || []);
+            setError(null);
+        } catch (error) {
+            console.log('Search a error!!')
+            setError('Error in Search');
+            setStorage([])
+        }finally{
+            setLoadin(false);
+        }
+
         setSerch('');
     }
 
@@ -22,8 +39,13 @@ function Home() {
                 setStorage(popularMovies)
             } catch (error) {
                 console.log('Error is showing in loadPopularMovies');
+                setError('Faild to load movies');
+            }
+            finally{
+                setLoadin(false);
             }
         }
+        loadPopularMovies();
     },[])
 
     // const storage = [
@@ -54,7 +76,8 @@ function Home() {
             <input type="text" name="" id="" 
             value={Search}
             onChange={(e)=>setSerch(e.target.value)}
-            className='border-zinc-800 rounded border w-sm h-8 bg-amber-50'/>
+            placeholder='Search Your Movie'
+            className='border-zinc-800 rounded border w-sm h-8 bg-amber-50 p-2'/>
             <div className=''>
             <button onClick={handleSearch} className='border bg-green-500 px-1 rounded-sm hover:bg-red-500'>Search</button>
             </div>
@@ -62,7 +85,7 @@ function Home() {
         <div>
             {
                 storage.map((movie)=>(
-                    movie.title.toLowerCase().startsWith(Search.toLowerCase()) && <MovieCard movie={movie} key={movie.id}/>
+                    <MovieCard movie={movie} key={movie.id}/>
                 ))
             }
         </div>
