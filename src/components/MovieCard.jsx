@@ -5,7 +5,7 @@ function MovieCard({movie}) {
         alert('favt movie added')
     }
   return (
-    <div className='rounded-sm  flex-col inline-block border p-4 mx-2'>
+    <div className='rounded-sm  flex-col inline-block border p-4 mx-2 bg-amber-50'>
         <div className='flex align-top justify-center'>
             {/**Image part handled here */}
             <img src={movie.img} alt="movie-poster" className='w-40 h-40 rounded-md' />
