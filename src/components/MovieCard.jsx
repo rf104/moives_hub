@@ -1,7 +1,16 @@
 import React from 'react'
+import { useMovieContext } from '../contexts/MovieContext'
 
 function MovieCard({movie}) {
-    const favtBtn = ()=>{
+
+    const {isFavt, addFavt, rmvFavt} = useMovieContext();
+
+    const favt = isFavt(movie.id)
+
+    const favtBtn = (e)=>{
+        e.preventDefault()
+        if(favt) rmvFavt(movie.id);
+        else addFavt(movie.id);
         alert('favt movie added')
     }
   return (
@@ -10,7 +19,7 @@ function MovieCard({movie}) {
             {/**Image part handled here */}
             <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt="movie-poster" className='w-40 h-40 rounded-md' />
             <div>
-                <button className='h-8 w-8' onClick={favtBtn}>🤍</button>
+                <button className={`h-8 w-8 ${favt ? "bg-orange-600" : ""}`} onClick={favtBtn}>{favt ? "❤️" : "🤍"}</button>
             </div>
         </div>
         <div>
